@@ -12,6 +12,7 @@ import org.elasticsearch.common.inject.Inject;
 import org.elasticsearch.common.io.UTF8StreamWriter;
 import org.elasticsearch.common.io.stream.BytesStreamOutput;
 import org.elasticsearch.common.settings.Settings;
+import org.elasticsearch.script.CompiledScript;
 import org.elasticsearch.script.ExecutableScript;
 import org.elasticsearch.script.ScriptEngineService;
 import org.elasticsearch.script.SearchScript;
@@ -137,6 +138,11 @@ public class HandlebarsScriptEngineService extends AbstractComponent implements
     }
 
     @Override
+    public void scriptRemoved(CompiledScript script) {
+        // Nothing to do here
+    }
+
+    @Override
     public void close() {
         // Nothing to do here
     }
@@ -155,7 +161,11 @@ public class HandlebarsScriptEngineService extends AbstractComponent implements
         public HandlebarsExecutableScript(final Template template,
                 final Map<String, Object> vars) {
             this.template = template;
-            this.vars = vars == null ? Collections.EMPTY_MAP : vars;
+            if (vars == null) {
+                this.vars = Collections.emptyMap();
+            } else {
+                this.vars = vars;
+            }
         }
 
         @Override
