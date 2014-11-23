@@ -50,7 +50,11 @@ public class HandlebarsPluginTest {
                 settingsBuilder.put("http.cors.enabled", true);
             }
         }).build(
-                newConfigs().numOfNode(1).ramIndexStore()
+                newConfigs()
+                        .numOfNode(1)
+                        .ramIndexStore()
+                        .clusterName(
+                                "es-handlebars-" + System.currentTimeMillis())
                         .basePath(esHomeDir.getAbsolutePath()));
         runner.ensureGreen();
     }
