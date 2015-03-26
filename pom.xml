@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.codelibs</groupId>
 	<artifactId>elasticsearch-lang-handlebars</artifactId>
-	<version>1.4.2-SNAPSHOT</version>
+	<version>1.5.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<description>This plugin adds Handlebars language to Elasticsearch.</description>
 	<inceptionYear>2014</inceptionYear>
@@ -26,7 +26,7 @@
 		<version>9</version>
 	</parent>
 	<properties>
-		<elasticsearch.version>1.4.0</elasticsearch.version>
+		<elasticsearch.version>1.5.0</elasticsearch.version>
 		<handlebars.version>1.3.2</handlebars.version>
 	</properties>
 	<build>
@@ -95,7 +95,7 @@
 		<dependency>
 			<groupId>org.codelibs</groupId>
 			<artifactId>elasticsearch-cluster-runner</artifactId>
-			<version>1.4.0.0</version>
+			<version>1.5.0.0</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -119,7 +119,7 @@
 		<dependency>
 			<groupId>org.codelibs</groupId>
 			<artifactId>elasticsearch-sstmpl</artifactId>
-			<version>1.4.0</version>
+			<version>1.5.0-SNAPSHOT</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
