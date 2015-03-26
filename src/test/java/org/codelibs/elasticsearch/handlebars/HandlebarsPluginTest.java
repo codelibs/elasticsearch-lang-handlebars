@@ -32,12 +32,12 @@ public class HandlebarsPluginTest {
         esHomeDir = File.createTempFile("eshome", "");
         esHomeDir.delete();
 
-        final File scriptDir = new File(esHomeDir, "config/scripts");
+        final File scriptDir = new File(esHomeDir, "config/node_1/scripts");
         scriptDir.mkdirs();
         Files.write(
                 "{\"query\":{\"match\":{\"{{my_field}}\":\"{{my_value}}\"}},\"size\":\"{{my_size}}\"}"
                         .getBytes(), new File(scriptDir, "search_query_2.hbs"));
-        final File helperDir = new File(esHomeDir, "config/helpers");
+        final File helperDir = new File(esHomeDir, "config/node_1/helpers");
         helperDir.mkdirs();
         Files.write(
                 "Handlebars.registerHelper('valueHelper', function (context) { return \"1\";})"
