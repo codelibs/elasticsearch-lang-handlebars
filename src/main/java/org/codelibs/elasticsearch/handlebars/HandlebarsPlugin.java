@@ -1,13 +1,13 @@
 package org.codelibs.elasticsearch.handlebars;
 
 import org.codelibs.elasticsearch.handlebars.service.HandlebarsScriptEngineService;
-import org.elasticsearch.plugins.AbstractPlugin;
+import org.elasticsearch.plugins.Plugin;
 import org.elasticsearch.script.ScriptModule;
 
-public class HandlebarsPlugin extends AbstractPlugin {
+public class HandlebarsPlugin extends Plugin {
     @Override
     public String name() {
-        return "HandlebarsPlugin";
+        return "lang-handlebars";
     }
 
     @Override

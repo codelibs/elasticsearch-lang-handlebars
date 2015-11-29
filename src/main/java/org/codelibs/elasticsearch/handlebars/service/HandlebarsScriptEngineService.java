@@ -98,23 +98,25 @@ public class HandlebarsScriptEngineService extends AbstractComponent implements
     }
 
     @Override
-    public ExecutableScript executable(final Object template,
-            final Map<String, Object> vars) {
-        return new HandlebarsExecutableScript((Template) template, vars);
+    public ExecutableScript executable(CompiledScript compiledScript,
+            Map<String, Object> vars) {
+        return new HandlebarsExecutableScript(
+                (Template) compiledScript.compiled(), vars);
     }
 
     @Override
-    public SearchScript search(final Object template,
-            final SearchLookup lookup, final Map<String, Object> vars) {
+    public SearchScript search(CompiledScript compiledScript,
+            SearchLookup lookup, Map<String, Object> vars) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Object execute(final Object template, final Map<String, Object> vars) {
+    public Object execute(CompiledScript compiledScript,
+            Map<String, Object> vars) {
         final BytesStreamOutput result = new BytesStreamOutput();
         final UTF8StreamWriter writer = utf8StreamWriter().setOutput(result);
         try {
-            ((Template) template).apply(vars, writer);
+            ((Template) compiledScript.compiled()).apply(vars, writer);
             writer.flush();
         } catch (final IOException e) {
             logger.error(

@@ -13,8 +13,8 @@ import org.codelibs.elasticsearch.runner.ElasticsearchClusterRunner;
 import org.codelibs.elasticsearch.runner.net.Curl;
 import org.codelibs.elasticsearch.runner.net.CurlResponse;
 import org.elasticsearch.action.index.IndexResponse;
-import org.elasticsearch.common.settings.ImmutableSettings;
-import org.elasticsearch.common.settings.ImmutableSettings.Builder;
+import org.elasticsearch.common.settings.Settings;
+import org.elasticsearch.common.settings.Settings.Builder;
 import org.elasticsearch.node.Node;
 import org.junit.After;
 import org.junit.Before;
@@ -27,8 +27,11 @@ public class HandlebarsPluginTest {
 
     private File esHomeDir;
 
+    private String clusterName;
+
     @Before
     public void setUp() throws Exception {
+        clusterName = "es-handlebars-" + System.currentTimeMillis();
         esHomeDir = File.createTempFile("eshome", "");
         esHomeDir.delete();
 
@@ -47,15 +50,23 @@ public class HandlebarsPluginTest {
         runner.onBuild(new ElasticsearchClusterRunner.Builder() {
             @Override
             public void build(final int number, final Builder settingsBuilder) {
+                settingsBuilder.put("script.inline", "on");
+                settingsBuilder.put("script.indexed", "on");
+                settingsBuilder.put("script.file", "on");
+                settingsBuilder.put("script.search", "on");
                 settingsBuilder.put("http.cors.enabled", true);
+                settingsBuilder.put("http.cors.allow-origin", "*");
+                settingsBuilder.put("index.number_of_shards", 3);
+                settingsBuilder.put("index.number_of_replicas", 0);
+                settingsBuilder.putArray("discovery.zen.ping.unicast.hosts",
+                        "localhost:9301-9310");
+                settingsBuilder.put("plugin.types",
+                        "org.codelibs.elasticsearch.handlebars.HandlebarsPlugin,org.codelibs.elasticsearch.sstmpl.ScriptTemplatePlugin");
+                settingsBuilder
+                        .put("index.unassigned.node_left.delayed_timeout", "0");
             }
-        }).build(
-                newConfigs()
-                        .numOfNode(1)
-                        .ramIndexStore()
-                        .clusterName(
-                                "es-handlebars-" + System.currentTimeMillis())
-                        .basePath(esHomeDir.getAbsolutePath()));
+        }).build(newConfigs().numOfNode(1).clusterName(clusterName)
+                .basePath(esHomeDir.getAbsolutePath()));
         runner.ensureGreen();
     }
 
@@ -74,7 +85,7 @@ public class HandlebarsPluginTest {
 
         final String index = "sample";
         final String type = "data";
-        runner.createIndex(index, ImmutableSettings.builder().build());
+        runner.createIndex(index, Settings.builder().build());
 
         for (int i = 1; i <= 1000; i++) {
             final IndexResponse indexResponse = runner.insert(index, type,
