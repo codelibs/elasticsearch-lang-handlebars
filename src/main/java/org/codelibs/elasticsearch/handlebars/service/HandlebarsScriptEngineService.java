@@ -89,7 +89,7 @@ public class HandlebarsScriptEngineService extends AbstractComponent implements
     }
 
     @Override
-    public Object compile(final String script) {
+    public Object compile(final String script, final Map<String, String> params) {
         try {
             return handlebars.compileInline(script);
         } catch (final IOException e) {
