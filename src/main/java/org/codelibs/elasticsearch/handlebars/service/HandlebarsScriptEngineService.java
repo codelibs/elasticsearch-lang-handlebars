@@ -111,35 +111,6 @@ public class HandlebarsScriptEngineService extends AbstractComponent implements
     }
 
     @Override
-    public Object execute(CompiledScript compiledScript,
-            Map<String, Object> vars) {
-        final BytesStreamOutput result = new BytesStreamOutput();
-        final UTF8StreamWriter writer = utf8StreamWriter().setOutput(result);
-        try {
-            ((Template) compiledScript.compiled()).apply(vars, writer);
-            writer.flush();
-        } catch (final IOException e) {
-            logger.error(
-                    "Could not execute query template (failed to flush writer): ",
-                    e);
-        } finally {
-            try {
-                writer.close();
-            } catch (final IOException e) {
-                logger.error(
-                        "Could not execute query template (failed to close writer): ",
-                        e);
-            }
-        }
-        return result.bytes();
-    }
-
-    @Override
-    public Object unwrap(final Object value) {
-        return value;
-    }
-
-    @Override
     public void scriptRemoved(CompiledScript script) {
         // Nothing to do here
     }
