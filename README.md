@@ -9,7 +9,8 @@ This plugin add Handlebars language to Elasticsearch.
 
 | Version   | Elasticsearch |
 |:---------:|:-------------:|
-| master    | 1.4.X         |
+| master    | 2.3.X         |
+| 2.2.0     | 2.2.2         |
 | 1.4.1     | 1.4.0         |
 
 ### Issues/Questions
@@ -21,7 +22,7 @@ Please file an [issue](https://github.com/codelibs/elasticsearch-lang-handlebars
 
 ### Install Handlebars Language Plugin
 
-    $ $ES_HOME/bin/plugin --install org.codelibs/elasticsearch-lang-handlebars/1.4.1
+    $ $ES_HOME/bin/plugin install org.codelibs/elasticsearch-lang-handlebars/2.2.0
 
 ## References
 
