@@ -111,11 +111,6 @@ public class HandlebarsScriptEngineService extends AbstractComponent implements
     }
 
     @Override
-    public void scriptRemoved(CompiledScript script) {
-        // Nothing to do here
-    }
-
-    @Override
     public void close() {
         // Nothing to do here
     }
